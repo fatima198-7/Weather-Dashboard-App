@@ -1,7 +1,7 @@
 import Favourites from "./components/Favourites";
 import Navbar from "./components/Navbar";
 import SearchHistory from "./components/SearchHistory";
-import Weather from "./components/weather";
+import Weather from "./components/Weather";
 
 function App() {
   return (
