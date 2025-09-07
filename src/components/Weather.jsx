@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addFavourite } from "../features/favouriteSlice";
+import wind from "../assets/wind2.webp";
+import humidity from "../assets/humidity.png";
 
 function Weather() {
   const dispatch = useDispatch();
@@ -46,7 +48,7 @@ function Weather() {
           <div className="row-cont d-flex justify-content-between align-item-center mt-6 text-white">
             <div className="details d-flex justify-content-center align-items-center rounded ">
               <img
-                src="../../Images/humidity.png"
+                src={humidity}
                 alt="humidity"
                 className="mx-3 img1"
                 style={{ filter: "brightness(0) invert(1)" }}
@@ -59,7 +61,7 @@ function Weather() {
 
             <div className="details d-flex justify-content-end align-items-center rounded">
               <img
-                src="../../Images/wind2.webp"
+                src={wind}
                 alt="wind"
                 className="img2 mx-3"
                 style={{ filter: "brightness(0) invert(1)" }}

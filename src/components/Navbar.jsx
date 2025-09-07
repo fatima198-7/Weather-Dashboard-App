@@ -1,16 +1,24 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchWeather, setUnit } from "../features/weatherSlice";
+import { addHistory } from "../features/HistorySlice";
 
 function Navbar() {
   const [cityName, setCityName] = useState("");
   const dispatch = useDispatch();
+  const { unit } = useSelector((s) => s.weather);
 
-  const handleSearch = (e) => {
-    e.preventDefault(); // prevent form reload
-    if (cityName.trim() !== "") {
-      dispatch(fetchWeather(cityName));
-      setCityName(""); // input reset
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const trimmed = cityName.trim();
+    if (!trimmed) return;
+
+    try {
+      await dispatch(fetchWeather({ city: trimmed, unit })).unwrap();
+      dispatch(addHistory(trimmed));
+      setCityName("");
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -21,9 +29,9 @@ function Navbar() {
     >
       <div className="container-fluid">
         <a className="navbar-brand text-warning fw-bold">
-          <span className="fs-1">☁</span>Weather DashBoard
+          <span className="fs-1">☁</span> Weather DashBoard
         </a>
-        <form className="d-flex" role="search" onSubmit={handleSearch}>
+        <form className="d-flex" role="search" onSubmit={handleSubmit}>
           <input
             className="form-control me-2"
             type="search"

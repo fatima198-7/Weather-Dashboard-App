@@ -1,12 +1,14 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { clearHistory } from "../features/HistorySlice";
+import { clearHistory, addHistory } from "../features/HistorySlice";
+import { fetchWeather } from "../features/weatherSlice";
 
 function SearchHistory() {
-  const { list } = useSelector((state) => state.history);
   const dispatch = useDispatch();
+  const { mhistory } = useSelector((s) => s.history);
+  const { unit } = useSelector((s) => s.weather);
 
-  if (list.length === 0) {
+  if (!mhistory || mhistory.length === 0) {
     return (
       <div
         className="w-100 rounded p-4 mt-2 text-light"
@@ -20,11 +22,6 @@ function SearchHistory() {
     );
   }
 
-  const handleClear = () => {
-    dispatch(clearHistory());
-    localStorage.removeItem("history");
-  };
-
   return (
     <div
       className="w-100 rounded p-4 mt-2 text-light"
@@ -34,19 +31,27 @@ function SearchHistory() {
         🔍︎ Search History
       </h2>
 
-      <ul className="list-group mt-3">
-        {list.map((city, index) => (
+      <ul className="list-group">
+        {mhistory.map((city, i) => (
           <li
-            key={index}
-            className="list-group-item bg-transparent text-light border-light"
+            key={i}
+            className="list-group-item list-group-item-action"
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              dispatch(fetchWeather(city));
+              dispatch(addHistory(city));
+            }}
           >
-            {typeof city === "string" ? city : city.name}
+            {city}
           </li>
         ))}
       </ul>
 
       <div className="text-center mt-3">
-        <button className="btn btn-danger" onClick={handleClear}>
+        <button
+          className="btn btn-danger"
+          onClick={() => dispatch(clearHistory())}
+        >
           Clear History
         </button>
       </div>

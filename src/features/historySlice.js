@@ -3,14 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 export const historySlice = createSlice({
   name: "history",
   initialState: {
-    list: [], 
+    mhistory: [],
   },
   reducers: {
     addHistory: (state, action) => {
-      state.list.unshift(action.payload); // will add new history on top
+      state.mhistory = [action.payload, ...state.mhistory.slice(0, 9)];
     },
     clearHistory: (state) => {
-      state.list = [];
+      state.mhistory = [];
     },
   },
 });

@@ -10,7 +10,7 @@ body {
   width: 100%;
   margin: auto;
   /* background-color: #0b3954 !important; */
-  background-image: url(../Images/bg-1.jpg);
+  background-image: url(../public/Images/bg-1.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
